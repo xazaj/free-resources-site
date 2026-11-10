@@ -1,0 +1,4 @@
+# No third-party dependencies. The site is pure static HTML + JSON served
+# by Python's standard library (server.py). Nothing to pip install.
+# This file exists only so the Uppcoder blank-Python stack has an
+# explicit, auditable dependency declaration: stdlib only.
