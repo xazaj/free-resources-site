@@ -49,7 +49,7 @@ python3 server.py            # 默认 http://127.0.0.1:8000
 
 ## 已知问题
 
-- 2026-11-10：Uppcoder 网页 Terminal / VS Code / Files 与应用根地址多次返回纯文本 `404 page not found`，重启后仍如此；Python / pip / git 版本未通过网页终端核实。部署后请先通过 SSH 核实（见 DEPLOY.md），不要默认网页工具可用。
+- 2026-11-10：Uppcoder 网页 Terminal / VS Code / Files 与应用根地址多次返回纯文本 `404 page not found`，重启后仍如此；Python / pip / git 版本未通过网页终端核实。2026-11-10 晚查明一个直接原因：平台 Python 默认跑 `python3 -u app.py`，而仓库当时只有 `server.py`，门户里又没有任何地方能改启动命令；已补 `app.py`（仅把启动交给 `server.main()`）并重新部署。部署后请先通过 SSH 核实（见 DEPLOY.md），不要默认网页工具可用。
 - 自定义域名是**后续步骤**，本次不配。用户域名托管在 Cloudflare；Uppcoder 文档说自定义域名是 plan 功能，Deploy €15 档列出 6 个域名，**Spark 免费档是否包含自定义域名未核实**，部署后先在 Stack 的域名设置里确认，再决定。
 
 ## 文件结构
@@ -59,6 +59,7 @@ uppcoder-free-resources/
 ├── README.md                     本文件
 ├── DEPLOY.md                     部署、公开、刷新、排障步骤
 ├── requirements.txt              无第三方依赖（标准库 only，仅作声明）
+├── app.py                        Uppcoder 入口：平台默认跑 `python3 -u app.py`，本文件仅交给 `server.main()`
 ├── server.py                     标准库静态服务器，$PORT，默认 8000
 ├── data/                         本次快照（2026-11-10）：services.json / deals.json / meta.json
 ├── public/                       构建产物（部署时同步这部分）：index.html / data/*.json / assets/
